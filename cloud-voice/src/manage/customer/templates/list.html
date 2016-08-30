@@ -1,0 +1,92 @@
+<div layout="row" layout-fill>
+	<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+		<manage-side-nav></manage-side-nav>
+	</md-sidenav>
+
+	<div flex layout="column" class="relative" role="main">
+		<manage-toolbar breadcrumbs="['利用者']" show-search="ctrl.showSearch"></manage-toolbar>
+
+		<md-toolbar class="md-hue-1" ng-show="ctrl.showSearch">
+			<div class="md-toolbar-tools">
+				<md-button class="md-icon-button" ng-click="ctrl.showSearch = false" aria-label="Back">
+					<md-icon md-font-icon="material-icons">arrow_back</md-icon>
+				</md-button>
+				<div layout="column" flex>
+					<label class="md-caption md-no-float" flex>キーワード</label>
+					<md-input-container md-no-float flex class="search-container">
+						<input ng-model="ctrl.query.keyword" ng-change="ctrl.find()" aria-label="Keyword">
+					</md-input-container>
+				</div>
+				<div layout="column" flex="20">
+					<label class="md-caption md-no-float" flex>聞き取り曜日</label>
+					<md-input-container md-no-float flex class="search-container">
+						<md-select ng-model="ctrl.query.day" ng-change="ctrl.find()" aria-label="Day">
+							<md-option value="sun">日</md-option>
+							<md-option value="mon">月</md-option>
+							<md-option value="tue">火</md-option>
+							<md-option value="wed">水</md-option>
+							<md-option value="thu">木</md-option>
+							<md-option value="fri">金</md-option>
+							<md-option value="sat">土</md-option>
+						</md-select>
+					</md-input-container>
+				</div>
+				<md-button class="md-icon-button" ng-click="ctrl.showSearch = false" aria-label="Search">
+					<md-icon md-font-icon="material-icons">search</md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+
+		<md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="ctrl.showForm($event)" style="z-index: 100;">
+			<md-icon md-font-icon="material-icons">add</md-icon>
+		</md-button>
+
+		<md-content class="md-default-theme">
+			<div flex layout="column">
+				<md-card>
+					<md-card-content class="card-list">
+						<div class="data-table">
+							<table>
+								<thead>
+									<tr md-row>
+										<th md-column md-order-by="nameToLower" class="avater"><span>写真</span></th>
+										<th md-column md-numeric md-order-by="calories.value"><span>名前</span></th>
+										<th md-column md-numeric>前回聞き取り日</th>
+										<th md-column md-numeric></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="customer in ctrl.customers">
+										<td md-cell class="avater">
+											<div ng-if="customer.photo === null" class="md-avatar img-circle" style="height: 40px;width: 40px;background-color: #999999;"></div>
+											<img ng-if="customer.photo !== null" ng-src="{{ctrl.constant.resourceBasePath}}customer/{{customer.photo}}" class="md-avatar img-circle" style="height: 40px;width: 40px;">
+										</td>
+										<td md-cell><span class="name">{{customer.family_name}} {{customer.given_name}}<small class="age" ng-if="customer.birthday">&nbsp;({{customer.birthday | toAge}})</small></span></td>
+										<td md-cell>{{customer.latest_hearing_at ? (customer.latest_hearing_at | toJpDate) : '聞き取り情報なし'}}</td>
+										<td md-cell>
+											<div layout="row" layout-align="end center">
+												<md-button class="md-fab md-mini md-primary" ng-click="ctrl.showInfo($event, customer.id)">
+													<md-icon md-font-icon="material-icons">info_outline</md-icon>
+												</md-button>
+												<md-button class="md-fab md-mini md-primary" href="#/customer/hearing/{{customer.id}}/{{ctrl.moment().format('YYYY-MM-DD')}}">
+													<md-icon md-font-icon="material-icons">hearing</md-icon>
+												</md-button>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</md-card-content>
+				</md-card>
+				<md-card ng-show="ctrl.current_page < ctrl.total_pages">
+					<md-card-title>
+						<md-card-title-text ng-click="ctrl.more()">
+							<md-icon md-font-icon="material-icons">arrow_forward さらに読み込む</md-icon>
+						</md-card-title-text>
+					</md-card-title>
+				</md-card>
+			</div>
+		</md-content>
+	</div>
+</div>

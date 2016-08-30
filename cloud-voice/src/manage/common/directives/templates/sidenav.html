@@ -1,0 +1,24 @@
+<md-toolbar class="md-hue-2 nav-header">
+	<div layout="column" layout-align="center center" class="md-toolbar-tools-bottom inset">
+		<a ng-href="#/customer/">
+			<img ng-src="{{ctrl.constant.assetsBasePath}}img/logo_white.png" width="256" height="64">
+		</a>
+	</div>
+</md-toolbar>
+
+<md-list flex md-scroll-y ng-show="ctrl.staff !== undefined">
+	<md-subheader class="md-no-sticky">管理</md-subheader>
+	<md-list-item ng-href="#/customer/">
+		<md-icon md-font-icon="material-icons">contact_mail</md-icon>
+		<p>利用者</p>
+	</md-list-item>
+	<md-list-item ng-href="#/staff/">
+		<md-icon md-font-icon="material-icons">group</md-icon>
+		<p>スタッフ</p>
+	</md-list-item>
+	<md-subheader class="md-no-sticky">{{ctrl.staff.family_name}} {{ctrl.staff.given_name}}</md-subheader>
+	<md-list-item ng-href="#/auth/logout/">
+		<md-icon md-font-icon="material-icons">exit_to_app</md-icon>
+		<p>ログアウト</p>
+	</md-list-item>
+</md-list>

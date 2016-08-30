@@ -1,0 +1,191 @@
+<div flex layout-fill layout="column"　class="relative" role="main">
+	<md-content class="md-default-theme md-padding condition">
+		<div flex layout="column">
+			<md-card>
+				<md-card-content>
+					<h2>{{ctrl.customer.family_name}} {{ctrl.customer.given_name}} さん<small ng-if="ctrl.customer.birthday">（{{ctrl.customer.birthday | toAge}}）</small></h2>
+					<div layout="row" layout-xs="column">
+						<div class="img-circle" ng-if="ctrl.customer.photo === null" style="margin:10px; height: 200px;width: 200px; background-color: #999999;"></div>
+						<img class="img-circle" ng-if="ctrl.customer.photo !== null" ng-src="{{ctrl.constant.resourceBasePath}}customer/{{ctrl.customer.photo}}" style="margin:10px; height: 200px;width: 200px;">
+						<div flex="65" style="margin:10px;">
+							<md-list class="profile">
+								<md-list-item>
+									<h4 flex="30">名前</h4>
+									<p>{{ctrl.customer.family_name}} {{ctrl.customer.given_name}}</p>
+								</md-list-item>
+								<md-list-item>
+									<h4 flex="30">フリガナ</h4>
+									<p>{{ctrl.customer.family_name_kana}} {{ctrl.customer.given_name_kana}}</p>
+								</md-list-item>
+								<md-list-item>
+									<h4 flex="30">生年月日</h4>
+									<p>{{ctrl.customer.birthday | toJpDate}}</p>
+								</md-list-item>
+								<md-list-item>
+									<h4 flex="30">身長</h4>
+									<p>{{ctrl.customer.height}}cm</p>
+								</md-list-item>
+								<md-list-item>
+									<h4 flex="30">体重</h4>
+									<p>{{ctrl.customer.weight}}kg</p>
+								</md-list-item>
+								<md-list-item>
+									<h4 flex="30">体温</h4>
+									<p>{{ctrl.customer.temperature}}度</p>
+								</md-list-item>
+								<md-list-item>
+									<h4 flex="30">最高血圧</h4>
+									<p>{{ctrl.customer.blood_pressure_systolic}}mmHg</p>
+								</md-list-item>
+								<md-list-item>
+									<h4 flex="30">最低血圧</h4>
+									<p>{{ctrl.customer.blood_pressure_diastolic}}mmHg</p>
+								</md-list-item>
+								<md-list-item>
+									<h4 flex="30">血液型</h4>
+									<p>{{ctrl.customer.blood_type}}型</p>
+								</md-list-item>
+								<md-list-item>
+									<h4 flex="30">住所</h4>
+									<p>〒{{ctrl.customer.post_code}} {{ctrl.customer.address}}</p>
+								</md-list-item>
+								<md-list-item>
+									<h4 flex="30">メールアドレス</h4>
+									<p>{{ctrl.customer.email}}</p>
+								</md-list-item>
+								<md-list-item ng-if="ctrl.customer.share_email_1">
+									<h4 flex="30">共有メールアドレス.1</h4>
+									<p>{{ctrl.customer.share_email_1}}</p>
+								</md-list-item>
+								<md-list-item ng-if="ctrl.customer.share_email_2">
+									<h4 flex="30">共有メールアドレス.2</h4>
+									<p>{{ctrl.customer.share_email_2}}</p>
+								</md-list-item>
+								<md-list-item ng-if="ctrl.customer.share_email_3">
+									<h4 flex="30">共有メールアドレス.3</h4>
+									<p>{{ctrl.customer.share_email_3}}</p>
+								</md-list-item>
+								<md-list-item ng-if="ctrl.customer.share_email_4">
+									<h4 flex="30">共有メールアドレス.4</h4>
+									<p>{{ctrl.customer.share_email_4}}</p>
+								</md-list-item>
+								<md-list-item ng-if="ctrl.customer.share_email_5">
+									<h4 flex="30">共有メールアドレス.5</h4>
+									<p>{{ctrl.customer.share_email_5}}</p>
+								</md-list-item>
+								<md-list-item>
+									<h4 flex="30">電話番号.1</h4>
+									<p>{{ctrl.customer.phone_number_1 | formatPhone}}</p>
+								</md-list-item>
+								<md-list-item ng-if="ctrl.customer.phone_number_2">
+									<h4 flex="30">電話番号.2</h4>
+									<p>{{ctrl.customer.phone_number_2 | formatPhone}}</p>
+								</md-list-item>
+								<md-list-item>
+									<h4 flex="30">緊急連絡先（続柄）</h4>
+									<div layout="column">
+										<div ng-repeat="relation in ctrl.relations" style="margin: 12px 0 10px;">
+											<strong>{{relation.family_name}} {{relation.given_name}} さん（{{relation.relation}}）</strong>
+											<div flex-offset="10" flex="" style="width: 100%;">
+												<p ng-if="relation.phone_number_1">
+													電話番号1：{{relation.phone_number_1 | formatPhone}}
+												</p>
+											</div>
+											<div flex-offset="10" flex="" style="width: 100%;">
+												<p ng-if="relation.phone_number_2">
+													電話番号2：{{relation.phone_number_2 | formatPhone}}
+												</p>
+											</div>
+										</div>
+									</div>
+								</md-list-item>
+								<md-list-item>
+									<h4 flex="30">備考</h4>
+									<p class="note">{{ctrl.customer.note}}</p>
+								</md-list-item>
+							</md-list>
+						</div>
+					</div>
+				</md-card-content>
+			</md-card>
+			<!-- <md-card>
+					<md-card-content>
+						<div class="section">
+							<div layout="row" class="customer-table">
+								<button flex="10" layout="row" layout-align="center center" class="md-button md-primary" ng-click="ctrl.prevMonthHistories()" ng-disabled="ctrl.history.isLoading == true">
+									<span class="md-display-3">&#8810;</span>
+								</button>
+								<div layout="column" flex="80">
+									<div layout="column" layout-align="center center">
+										<h2>通話明細<small>（{{ctrl.systemService.formatDate(ctrl.history.date, 'YYYY年 M月')}}）</small></h2>
+									</div>
+									<div layout="row" class="main">
+										<md-list flex="">
+											<md-list-item>
+												<div layout="row" class="list-header">
+													<p flex="25">通話日時</p>
+													<p flex="20">通話時間</p>
+													<p flex="">内容</p>
+													<p flex="20">通話費用</p>
+												</div>
+											</md-list-item>
+											<md-list-item ng-repeat="row in ctrl.history.data">
+												<div layout="row" class="list-item">
+													<p flex="25">{{ctrl.systemService.formatDate(row.start_at, 'YYYY年 M月 DD日')}}</p>
+													<p flex="20">{{row.talk_time}}</p>
+													<p flex="">録音内容（仮）</p>
+													<p flex="20">10円（仮）</p>
+												</div>
+											</md-list-item>
+										</md-list>
+										<md-backdrop class="md-dialog-backdrop md-opaque ng-scope blindfold" aria-hidden="true" ng-show="ctrl.history.isLoading == true"></md-backdrop>
+										<md-progress-circular class="loading" md-mode="indeterminate" md-diameter="96" ng-show="ctrl.history.isLoading == true"></md-progress-circular>
+									</div>
+								</div>
+								<button flex="10" layout="row" layout-align="center center" class="md-button md-primary" ng-click="ctrl.nextMonthHistories()" ng-disabled="ctrl.history.isLoading == true">
+									<span class="md-display-3">&#8811;</span>
+								</button>
+							</div>
+						</div>
+						<br>
+
+						<div class="section">
+							<div layout="row" class="customer-table">
+								<button flex="10" layout="row" layout-align="center center" class="md-button md-primary" ng-click="ctrl.prevMonthHearings()" ng-disabled="ctrl.hearing.isLoading == true">
+									<span class="md-display-3">&#8810;</span>
+								</button>
+								<div layout="column" flex="80">
+									<div layout="column" layout-align="center center">
+										<h2>食事聞き取り詳細<small>（{{ctrl.systemService.formatDate(ctrl.hearing.date, 'YYYY年 M月')}}）</small></h2>
+									</div>
+									<div layout="row" class="main">
+										<md-list flex="">
+											<md-list-item>
+												<div layout="row" class="list-header">
+													<p flex="25">聞き取り日時</p>
+													<p flex="">内容</p>
+													<p flex="25">ダウンロード</p>
+												</div>
+											</md-list-item>
+											<md-list-item ng-repeat="row in ctrl.hearing.data">
+												<div layout="row" class="list-item">
+													<p flex="25">{{ctrl.systemService.formatDate(row.hearing_at, 'YYYY年 M月 DD日')}}</p>
+													<p flex="">{{row.content}}</p>
+													<p flex="25">ダウンロード</p>
+												</div>
+											</md-list-item>
+										</md-list>
+										<md-backdrop class="md-dialog-backdrop md-opaque ng-scope blindfold" aria-hidden="true" ng-show="ctrl.hearing.isLoading == true"></md-backdrop>
+										<md-progress-circular class="loading" md-mode="indeterminate" md-diameter="96" ng-show="ctrl.hearing.isLoading == true"></md-progress-circular>
+									</div>
+								</div>
+								<button flex="10" layout="row" layout-align="center center" class="md-button md-primary" ng-click="ctrl.nextMonthHearings()" ng-disabled="ctrl.hearing.isLoading == true">
+									<span class="md-display-3">&#8811;</span>
+								</button>
+							</div>
+						</div>
+					</md-card-content>
+				</md-card> -->
+		</div>
+	</md-content>
+</div>

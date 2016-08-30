@@ -1,0 +1,19 @@
+{
+  "name": "cloud-voice",
+  "description": "",
+  "version": "1.0.0",
+  "homepage": "",
+  "license": "MIT",
+  "private": true,
+  "componentsDirectory": "public/assets/libs",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-google-chart": "^0.1.0"
+  }
+}

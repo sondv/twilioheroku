@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "cloud-voice-v2"
+  config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.7-x86_64-v20151108.box"
+
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "forwarded_port", guest: 3000, host: 3000
+  config.vm.network "forwarded_port", guest: 3306, host: 3306
+
+  config.vm.synced_folder "../cloud-voice", "/vagrant/work/cloud-voice"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize ["modifyvm", :id, "--memory", "1024"]
+  end
+
+  # SHELL
+  config.vm.provision :shell, :path => "environment/scripts/initialize.sh"
+  config.vm.provision :shell, :path => "environment/scripts/install_yum_repositories.sh"
+  config.vm.provision :shell, :path => "environment/scripts/install_mysql.sh"
+  config.vm.provision :shell, :path => "environment/scripts/install_apache.sh"
+  config.vm.provision :shell, :path => "environment/scripts/install_php.sh"
+  config.vm.provision :shell, :path => "environment/scripts/install_fuelphp.sh"
+  config.vm.provision :shell, :path => "environment/scripts/install_node.sh"
+  config.vm.provision :shell, :path => "environment/scripts/always.sh", run: "always"
+end

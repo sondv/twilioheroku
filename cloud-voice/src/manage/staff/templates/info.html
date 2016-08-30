@@ -1,0 +1,29 @@
+<md-dialog aria-label="Staff" style="min-width:40%;">
+    <md-dialog-content class="md-padding">
+        <div layout="column">
+            <div class="info-main">
+                <small style="font-size: 16px;color: #333;">{{ctrl.staff.family_name_kana}} {{ctrl.staff.given_name_kana}}</small>
+                <p style="font-size:25px; font-weight:bold; margin-top:10px;">
+                    {{ctrl.staff.family_name}} {{ctrl.staff.given_name}}
+                </p>
+            </div>
+            <div class="info-sub">
+                <p class="label">メールアドレス</p>
+                <p class="value">{{ctrl.staff.email ? ctrl.staff.email : '--'}}</p>
+                <p class="label">電話番号</p>
+                <p class="value">{{ctrl.staff.phone_number ? (ctrl.staff.phone_number | formatPhone) : '--'}}</p>
+                <p class="label">最終ログイン日時</p>
+                <p class="value">{{ctrl.staff.logined_at ? ctrl.systemService.formatDate(ctrl.staff.logined_at, 'YYYY年 M月 DD日') : '未ログイン'}}</p>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="space-between center">
+		<div layout="row">
+			<md-button class="md-raised md-warn" ng-click="ctrl.showDelete()">削除</md-button>
+		</div>
+		<div layout="row">
+            <md-button class="md-raised" ng-click="ctrl.close()">閉じる</md-button>
+			<md-button class="md-raised md-primary" ng-click="ctrl.showEdit()">編集</md-button>
+		</div>
+	</md-dialog-actions>
+</md-dialog>

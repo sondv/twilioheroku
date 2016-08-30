@@ -1,0 +1,109 @@
+<div layout="row" layout-fill>
+	<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+		<manage-side-nav></manage-side-nav>
+	</md-sidenav>
+
+	<div flex layout="column" class="relative" role="main">
+		<manage-toolbar breadcrumbs="['利用者', '状態']"></manage-toolbar>
+
+		<manage-twilio customer-id="{{ctrl.customer.id}}" phones="ctrl.phones"></manage-twilio>
+
+		<md-content class="md-default-theme md-padding condition">
+			<div flex layout="column">
+				<md-card>
+					<md-card-content>
+						<div layout="row" layout-align="center center" class="card-profile">
+							<div class="img-circle avatar" ng-if="ctrl.customer.photo === null"></div>
+							<img class="img-circle avatar" ng-if="ctrl.customer.photo !== null" ng-src="{{ctrl.constant.resourceBasePath}}customer/{{ctrl.customer.photo}}">
+							<div class="md-list-item-text">
+								<p class="name">
+									<span class="kana">{{ctrl.customer.family_name_kana}} {{ctrl.customer.given_name_kana}}</span>
+									<br> {{ctrl.customer.family_name}} {{ctrl.customer.given_name}} さん<span class="age" ng-if="customer.birthday">（{{ctrl.customer.birthday | toAge}}）</span>
+								</p>
+								<hr>
+								<p>
+									{{ctrl.customer.height}} cm　　　{{ctrl.customer.weight}} キログラム　　　BMI：{{ctrl.customer.weight / ((ctrl.customer.height/100) * (ctrl.customer.height/100)) | number:1}}
+									<br> 利用開始日：{{ctrl.customer.created_at | toJpDate}}
+									<br> 前回聞き取り日：{{ctrl.customer.latest_hearing_at | toJpDate}}
+								</p>
+							</div>
+						</div>
+					</md-card-content>
+				</md-card>
+				<md-card>
+					<md-card-content>
+						<h2 class="card-header">直近10日の状態</h2>
+						<div layout="row" layout-align="center center" flex>
+							<div layout="column" layout-align="center center" flex="30">
+								<h3 class="item-header">食事について</h3>
+								<sentiment value="ctrl.recently.meal" size="100" layout="column"></sentiment>
+								<span>指数：{{ctrl.recently.meal}}</span>
+							</div>
+							<div layout="column" layout-align="center center" flex="30">
+								<h3 class="item-header">活動について</h3>
+								<sentiment value="ctrl.recently.activity" size="100" layout="column"></sentiment>
+								<span>指数：{{ctrl.recently.activity}}</span>
+							</div>
+							<div layout="column" layout-align="center center" flex="30">
+								<h3 class="item-header">コミュニケーションについて</h3>
+								<sentiment value="ctrl.recently.feeling" size="100" layout="column"></sentiment>
+								<span>指数：{{ctrl.recently.feeling}}</span>
+							</div>
+						</div>
+					</md-card-content>
+				</md-card>
+				<md-card>
+					<md-card-content>
+						<h2 class="card-header">状態グラフ</h2>
+						<div layout="row" layout-align="center center">
+							<md-button ng-click="ctrl.prevPeriod()">
+								<md-icon md-font-icon="material-icons">keyboard_arrow_left</md-icon>
+							</md-button>
+							<span style="font-size:20px;">
+								<span ng-show="ctrl.systemService.formatDate(ctrl.chart.fromDate, 'YYYY年M月') !== ctrl.systemService.formatDate(ctrl.chart.toDate, 'YYYY年M月')">{{ctrl.systemService.formatDate(ctrl.chart.fromDate, 'YYYY年M月')}} 〜 </span>
+								{{ctrl.systemService.formatDate(ctrl.chart.toDate, 'YYYY年M月')}}
+							</span>
+							<md-button ng-click="ctrl.nextPeriod()">
+								<md-icon md-font-icon="material-icons">keyboard_arrow_right</md-icon>
+							</md-button>
+						</div>
+						<md-input-container layout="row" layout-align="center center">
+							<md-radio-group ng-model="ctrl.chart.period" ng-change="ctrl.changePeriod()" layout="row">
+								<md-radio-button value="1month">今月</md-radio-button>
+								<md-radio-button value="3months">3ヶ月</md-radio-button>
+								<md-radio-button value="12months">1年</md-radio-button>
+							</md-radio-group>
+						</md-input-container>
+
+						<div layout="column" layout-align="center center">
+							<h4 class="md-headline content-header">食事について</h2>
+							<sentiment value="ctrl.meal.average" size="50" layout="row"></sentiment>
+							平均：{{ctrl.meal.average}}&nbsp;&nbsp;
+						</div>
+						<!-- <div google-chart chart="ctrl.myChartObject" style="height:600px; width:100%;"></div> -->
+						<canvas id="chart-1" height="150"></canvas>
+
+						<div layout="column" layout-align="center center">
+							<h4 class="md-headline content-header">活動について</h4>
+							<sentiment value="ctrl.activity.average" size="50" layout="row"></sentiment>
+							平均：{{ctrl.activity.average}}&nbsp;&nbsp;
+						</div>
+						<canvas id="chart-2" height="150"></canvas>
+
+						<div layout="column" layout-align="center center">
+							<h4 class="md-headline content-header">コミュニケーションについて</h4>
+							<sentiment value="ctrl.feeling.average" size="50" layout="row"></sentiment>
+							平均指数：{{ctrl.feeling.average}}
+						</div>
+						<canvas id="chart-3" height="150"></canvas>
+
+						<div layout="column" layout-align="center center">
+							<h4 class="md-headline content-header">温度版（仮）</h4>
+						</div>
+						<canvas id="chart-4" height="150"></canvas>
+					</md-card-content>
+				</md-card>
+			</div>
+		</md-content>
+	</div>
+</div>

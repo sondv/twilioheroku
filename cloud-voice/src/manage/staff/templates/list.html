@@ -1,0 +1,72 @@
+<div layout="row" layout-fill>
+	<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+		<manage-side-nav></manage-side-nav>
+	</md-sidenav>
+
+	<div flex layout="column" class="relative" role="main">
+		<manage-toolbar breadcrumbs="['スタッフ']"></manage-toolbar>
+
+		<md-toolbar class="md-hue-1" ng-show="showSearch">
+			<div class="md-toolbar-tools">
+				<md-button class="md-icon-button" ng-click="showSearch = !showSearch" aria-label="Back">
+					<md-icon md-font-icon="material-icons">arrow_back</md-icon>
+				</md-button>
+				<div layout="column" flex>
+					<label class="md-caption md-no-float" flex>&nbsp;</label>
+					<md-input-container md-no-float flex>
+						<input ng-model="ctrl.search.keyword" ng-change="ctrl.find()" placeholder="お名前、カナなどで絞り込みます">
+					</md-input-container>
+				</div>
+				<md-button class="md-icon-button" ng-click="showSearch = !showSearch" aria-label="Search">
+					<md-icon md-font-icon="material-icons">search</md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+
+		<md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="ctrl.showForm($event)" style="z-index: 100;">
+			<md-icon md-font-icon="material-icons">add</md-icon>
+		</md-button>
+
+		<md-content class="md-default-theme">
+			<div flex layout="column">
+				<md-card>
+					<md-card-content class="card-list">
+						<div class="data-table">
+							<table>
+								<thead>
+									<tr md-row>
+										<th md-column md-numeric md-order-by="calories.value"><span>名前</span></th>
+										<th md-column md-numeric><md-icon md-font-icon="material-icons">call</md-icon>&nbsp;電話番号</th>
+										<th md-column md-numeric><md-icon md-font-icon="material-icons">email</md-icon>&nbsp;メールアドレス</th>
+										<th md-column md-numeric></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="staff in ctrl.staffs">
+										<td md-cell>{{staff.family_name}} {{staff.given_name}}</td>
+										<td md-cell>{{staff.phone_number | formatPhone}}</td>
+										<td md-cell>{{staff.email}}</td>
+										<td md-cell>
+											<div layout="row" layout-align="end center">
+												<md-button class="md-fab md-mini md-primary" ng-click="ctrl.showInfo($event, staff.id)">
+													<md-icon md-font-icon="material-icons">info_outline</md-icon>
+												</md-button>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</md-card-content>
+				</md-card>
+				<md-card ng-show="ctrl.current_page < ctrl.total_pages">
+					<md-card-title>
+						<md-card-title-text ng-click="ctrl.more()">
+							<md-icon md-font-icon="material-icons">arrow_forward さらに読み込む</md-icon>
+						</md-card-title-text>
+					</md-card-title>
+				</md-card>
+			</div>
+		</md-content>
+	</div>
+</div>

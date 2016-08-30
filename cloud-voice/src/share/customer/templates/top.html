@@ -1,0 +1,36 @@
+<div flex layout-fill layout="column" class="share-top" role="main">
+	<md-content class="md-default-theme md-padding">
+		<div flex layout="column">
+			<div layout="column" layout-align="center center" class="profile">
+				<div class="img-circle photo" ng-if="ctrl.customer.photo === null"></div>
+				<img class="img-circle photo" ng-if="ctrl.customer.photo !== null" ng-src="{{ctrl.constant.resourceBasePath}}customer/{{ctrl.customer.photo}}">
+				<h2 class="name">{{ctrl.customer.family_name}} {{ctrl.customer.given_name}} さん<small ng-if="ctrl.customer.birthday">（{{ctrl.customer.birthday | toAge}}）</small></h2>
+			</div>
+			<div layout="column">
+				<md-toolbar layout="row">
+					<div class="md-toolbar-tools">
+						<span>聞き取り情報</span>
+					</div>
+				</md-toolbar>
+				<md-progress-linear md-mode="indeterminate" ng-show="ctrl.hearings == null"></md-progress-linear>
+				<md-content>
+					<md-list ng-show="ctrl.hearings.length > 0" class="fade">
+						<md-list-item ng-repeat="hearing in ctrl.hearings" ng-click="ctrl.$location.path('/customer/hearing/' + ctrl.$stateParams.hash + '/' + hearing.hearing_at);">
+							<sentiment value="hearing.sentiment" size="40" avater="true"></sentiment>
+							<div flex layout="column" layout-align="center start">
+								<p>{{hearing.hearing_at | toJpDate}}</p>
+							</div>
+							<md-icon md-font-icon="material-icons" class="md-secondary">keyboard_arrow_right</md-icon>
+							<md-divider md-inset ng-if="!$last"></md-divider>
+						</md-list-item>
+					</md-list>
+					<div flex layout="row" layout-align="center center" ng-show="ctrl.hearings.length == 0" style="padding-top:50px;">
+						<p>
+							聞き取りデータがありません。
+						</p>
+					</div>
+				</md-content>
+			</div>
+		</div>
+	</md-content>
+</div>

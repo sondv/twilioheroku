@@ -1,0 +1,32 @@
+<div layout-fill>
+    <manage-toolbar breadcrumbs="['ログイン']"></manage-toolbar>
+	<md-content layout-padding>
+		<main>
+			<form name="form">
+				<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+					<md-input-container>
+						<label>ログインID</label>
+						<input required name="login_id" ng-model="ctrl.login_id">
+						<div ng-messages="form.login_id.$error">
+							<div ng-message="required">ログインIDを入力してください</div>
+						</div>
+					</md-input-container>
+				</section>
+				<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+					<md-input-container>
+						<label>パスワード</label>
+						<input required type="password" name="password" ng-model="ctrl.password">
+						<div ng-messages="form.password.$error">
+							<div ng-message="required">パスワードを入力してください</div>
+						</div>
+					</md-input-container>
+				</section>
+				<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+					<md-button class="md-raised md-primary" ng-click="ctrl.login()">
+						ログイン
+					</md-button>
+				</section>
+			</form>
+		</main>
+	</md-content>
+</div>

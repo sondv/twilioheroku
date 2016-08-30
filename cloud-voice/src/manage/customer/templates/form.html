@@ -1,0 +1,237 @@
+<md-dialog aria-label="Customer" class="dialog-customer">
+	<md-dialog-content style="padding: 18px;">
+		<form name="form">
+			<div layout layout-sm="column">
+				<md-input-container md-no-float flex>
+					<label class="md-caption md-no-float">お名前（姓）</label>
+					<input required ng-model="ctrl.customer.family_name">
+					<div ng-message ng-bind="ctrl.error.family_name"></div>
+				</md-input-container>
+				<md-input-container md-no-float flex>
+					<label class="md-caption md-no-float">お名前（名）</label>
+					<input required ng-model="ctrl.customer.given_name">
+					<div ng-message ng-bind="ctrl.error.given_name"></div>
+				</md-input-container>
+				<md-input-container md-no-float flex>
+					<label class="md-caption md-no-float">カナ（姓）</label>
+					<input ng-model="ctrl.customer.family_name_kana">
+					<div ng-message ng-bind="ctrl.error.family_name_kana"></div>
+				</md-input-container>
+				<md-input-container md-no-float flex>
+					<label class="md-caption md-no-float">カナ（名）</label>
+					<input ng-model="ctrl.customer.given_name_kana">
+					<div ng-message ng-bind="ctrl.error.given_name_kana"></div>
+				</md-input-container>
+			</div>
+			<div layout layout-sm="column">
+				<md-input-container md-no-float flex="20">
+					<label class="md-caption md-no-float">郵便番号</label>
+					<input ng-model="ctrl.customer.post_code">
+					<div ng-message ng-bind="ctrl.error.post_code"></div>
+				</md-input-container>
+				<md-input-container md-no-float flex="80">
+					<label class="md-caption md-no-float">住所</label>
+					<input ng-model="ctrl.customer.address">
+					<div ng-message ng-bind="ctrl.error.address"></div>
+				</md-input-container>
+			</div>
+			<div layout layout-sm="column">
+				<md-input-container md-no-float flex="60">
+					<label class="md-caption md-no-float">血液型</label>
+					<md-radio-group ng-model="ctrl.customer.blood_type" layout="row">
+						<md-radio-button value="">不明</md-radio-button>
+						<md-radio-button ng-repeat="blood_type in ctrl.const.blood_type" value="{{blood_type.value}}">{{blood_type.label}}</md-radio-button>
+					</md-radio-group>
+					<div ng-message ng-bind="ctrl.error.blood_type"></div>
+				</md-input-container>
+				<div layout="column" flex="40">
+					<label class="md-caption" style="color: rgba(0, 0, 0, 0.26)">生年月日</label>
+					<md-datepicker ng-model="ctrl.customer.birthday"></md-datepicker>
+				</div>
+			</div>
+			<div layout layout-sm="column">
+				<div layout layout-sm="column" layout-align="center center">
+					<md-input-container md-no-float flex>
+						<label class="md-caption md-no-float">身長</label>
+						<input ng-model="ctrl.customer.height">
+						<div ng-message ng-bind="ctrl.error.height"></div>
+					</md-input-container>
+					<span>cm</span>
+				</div>
+				<span flex="5"></span>
+				<div layout layout-sm="column" layout-align="center center">
+					<md-input-container md-no-float flex>
+						<label class="md-caption md-no-float">体重</label>
+						<input ng-model="ctrl.customer.weight">
+						<div ng-message ng-bind="ctrl.error.weight"></div>
+					</md-input-container>
+					<span>kg</span>
+				</div>
+				<span flex="5"></span>
+				<div layout layout-sm="column" layout-align="center center">
+					<md-input-container md-no-float flex>
+						<label class="md-caption md-no-float">体温</label>
+						<input ng-model="ctrl.customer.temperature">
+						<div ng-message ng-bind="ctrl.error.temperature"></div>
+					</md-input-container>
+					<span>度</span>
+				</div>
+				<span flex="5"></span>
+				<div layout layout-sm="column" layout-align="center center">
+					<md-input-container md-no-float flex>
+						<label class="md-caption md-no-float">最高血圧</label>
+						<input ng-model="ctrl.customer.blood_pressure_systolic">
+						<div ng-message ng-bind="ctrl.error.blood_pressure_systolic"></div>
+					</md-input-container>
+					<span>mmHg</span>
+				</div>
+				<span flex="5"></span>
+				<div layout layout-sm="column" layout-align="center center">
+					<md-input-container md-no-float flex>
+						<label class="md-caption md-no-float">最低血圧</label>
+						<input ng-model="ctrl.customer.blood_pressure_diastolic">
+						<div ng-message ng-bind="ctrl.error.blood_pressure_diastolic"></div>
+					</md-input-container>
+					<span>mmHg</span>
+				</div>
+			</div>
+			<div layout layout-sm="column">
+				<md-input-container md-no-float flex>
+					<label class="md-caption md-no-float">電話番号1</label>
+					<input ng-model="ctrl.customer.phone_number_1">
+					<div ng-message ng-bind="ctrl.error.phone_number_1"></div>
+				</md-input-container>
+				<md-input-container md-no-float flex>
+					<label class="md-caption md-no-float">電話番号2</label>
+					<input ng-model="ctrl.customer.phone_number_2">
+					<div ng-message ng-bind="ctrl.error.phone_number_2"></div>
+				</md-input-container>
+				<md-input-container md-no-float flex>
+					<label class="md-caption md-no-float">twilio番号</label>
+					<input ng-model="ctrl.customer.twilio_number">
+					<div ng-message ng-bind="ctrl.error.twilio_number"></div>
+				</md-input-container>
+				<md-input-container md-no-float flex>
+					<label class="md-caption md-no-float">twilioクライアント名</label>
+					<input ng-model="ctrl.customer.twilio_client">
+					<div ng-message ng-bind="ctrl.error.twilio_client"></div>
+				</md-input-container>
+			</div>
+			<div layout layout-sm="column">
+				<md-input-container md-no-float flex>
+					<label class="md-caption md-no-float">メールアドレス</label>
+					<input ng-model="ctrl.customer.email">
+					<div ng-message ng-bind="ctrl.error.email"></div>
+				</md-input-container>
+			</div>
+			<div layout layout-sm="column">
+				<md-input-container md-no-float flex>
+					<label class="md-caption md-no-float">共有メールアドレス.1</label>
+					<input ng-model="ctrl.customer.share_email_1">
+					<div ng-message ng-bind="ctrl.error.share_email_1"></div>
+					<div class="hint" ng-show="!ctrl.error.share_email_1">入力したメールアドレス宛に、聞き取り入力後にお知らせメールを送信します。</div>
+				</md-input-container>
+			</div>
+			<div layout layout-sm="column">
+				<md-input-container md-no-float flex>
+					<label class="md-caption md-no-float">共有メールアドレス.2</label>
+					<input ng-model="ctrl.customer.share_email_2">
+					<div ng-message ng-bind="ctrl.error.share_email_2"></div>
+					<div class="hint" ng-show="!ctrl.error.share_email_2">入力したメールアドレス宛に、聞き取り入力後にお知らせメールを送信します。</div>
+				</md-input-container>
+			</div>
+			<div layout layout-sm="column">
+				<md-input-container md-no-float flex>
+					<label class="md-caption md-no-float">共有メールアドレス.3</label>
+					<input ng-model="ctrl.customer.share_email_3">
+					<div ng-message ng-bind="ctrl.error.share_email_3"></div>
+					<div class="hint" ng-show="!ctrl.error.share_email_3">入力したメールアドレス宛に、聞き取り入力後にお知らせメールを送信します。</div>
+				</md-input-container>
+			</div>
+			<div layout layout-sm="column">
+				<md-input-container md-no-float flex>
+					<label class="md-caption md-no-float">共有メールアドレス.4</label>
+					<input ng-model="ctrl.customer.share_email_4">
+					<div ng-message ng-bind="ctrl.error.share_email_4"></div>
+					<div class="hint" ng-show="!ctrl.error.share_email_4">入力したメールアドレス宛に、聞き取り入力後にお知らせメールを送信します。</div>
+				</md-input-container>
+			</div>
+			<div layout layout-sm="column">
+				<md-input-container md-no-float flex>
+					<label class="md-caption md-no-float">共有メールアドレス.5</label>
+					<input ng-model="ctrl.customer.share_email_5">
+					<div ng-message ng-bind="ctrl.error.share_email_5"></div>
+					<div class="hint" ng-show="!ctrl.error.share_email_5">入力したメールアドレス宛に、聞き取り入力後にお知らせメールを送信します。</div>
+				</md-input-container>
+			</div>
+			<div layout layout-sm="column">
+				<md-input-container md-no-float flex="50">
+					<label class="md-caption md-no-float">備考</label>
+					<textarea ng-model="ctrl.customer.note" rows="5" md-maxlength="1000"></textarea>
+					<div ng-message ng-bind="ctrl.error.note"></div>
+				</md-input-container>
+				<md-input-container md-no-float flex-offset="5" flex="" ng-show="!ctrl.customer.photo">
+					<label class="md-caption md-no-float">顔写真</label>
+					<lf-ng-md-file-input lf-files="ctrl.file" accept="image/*" progress></lf-ng-md-file-input>
+				</md-input-container>
+				<md-input-container md-no-float flex-offset="5" flex="" ng-show="ctrl.customer.photo">
+					<label class="md-caption md-no-float">顔写真</label>
+					<img class="img-circle" ng-src="{{ctrl.constant.resourceBasePath}}customer/{{ctrl.customer.photo}}" style="height: 100px;width: 100px;">
+				</md-input-container>
+				<md-input-container md-no-float flex="" ng-show="ctrl.customer.photo">
+					<md-button class="md-raised" ng-click="ctrl.customer.photo = null">再設定する</md-button>
+				</md-input-container>
+			</div>
+			<div layout="column">
+				<md-input-container flex md-no-float ng-show="ctrl.customer.id">
+					<label class="md-caption md-no-float">共有URL</label>
+					<md-switch class="md-primary" md-no-ink aria-label="テキスト" ng-model="ctrl.share.enable">
+						共有URLを使用
+					</md-switch>
+				</md-input-container>
+				<fieldset ng-show="ctrl.share.enable" style="border-style: solid;border-width: 1px;">
+					<legend>共有URL設定</legend>
+					<div layout="column">
+						<p style="color:rgb(221,44,0);">
+							※URLで共有される情報には、利用者の個人情報が含まれます。取り扱いには十分注意してください。
+						</p>
+						<md-input-container class="md-block" ng-show="ctrl.share.url">
+							<label>共有URL</label>
+							<input ng-model="ctrl.share.url" readonly="readonly">
+						</md-input-container>
+						<div layout="row" layout-align="space-around center" ng-show="ctrl.share.url !== '' && ! ctrl.share.onChangePass && ! ctrl.share.onDelete" style="margin-top: 15px;">
+							<md-button class="md-raised" ng-click="ctrl.share.onChangePass = true" style="margin: 0 0 25px;">パスワードを変更</md-button>
+							<md-button class="md-raised md-warn" ng-click="ctrl.share.onDelete = true" style="margin: 0 0 25px;">共有URLを削除</md-button>
+						</div>
+						<div layout="row" ng-show="ctrl.share.url === '' || ctrl.share.onChangePass">
+							<md-input-container flex class="md-block">
+								<label>共有URLパスワード</label>
+								<input ng-model="ctrl.share.password" type="password" placeholder="******">
+								<div class="md-input-messages-animation ng-active" aria-live="assertive">
+									<span ng-show="ctrl.error.password">{{ctrl.error.password}}</span>
+								</div>
+							</md-input-container>
+							<div flex>
+								<md-button class="md-raised" ng-show="ctrl.share.onChangePass" ng-click="ctrl.share.onChangePass = false">キャンセル</md-button>
+								<md-button class="md-raised md-primary" ng-show="ctrl.share.url === ''" ng-click="ctrl.createShareURL()">共有URLを生成</md-button>
+								<md-button class="md-raised md-primary" ng-show="ctrl.share.url !== ''" ng-click="ctrl.changeShareURLPassword()">パスワードを変更</md-button>
+							</div>
+						</div>
+						<div layout="column" ng-show="ctrl.share.onDelete">
+							<p style="color:rgb(221,44,0);">※共有URLを削除すると、現在設定されている共有URLが使用できなくなります。よろしいですか。</p>
+							<div layout="row" layout-align="space-around center">
+								<md-button class="md-raised" ng-click="ctrl.share.onDelete = false" style="margin: 0 0 25px;">キャンセル</md-button>
+								<md-button class="md-raised md-warn" ng-click="ctrl.deleteShareURL()" style="margin: 0 0 25px;">削除</md-button>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</form>
+	</md-dialog-content>
+	<md-dialog-actions layout="row">
+		<span flex></span>
+		<md-button class="md-raised" ng-click="ctrl.cancel()">キャンセル</md-button>
+		<md-button class="md-raised md-primary" ng-click="ctrl.save()">保存する</md-button>
+	</md-dialog-actions>
+</md-dialog>

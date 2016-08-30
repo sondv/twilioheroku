@@ -1,0 +1,72 @@
+<md-dialog aria-label="Staff">
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>{{ctrl.staff ? 'スタッフ編集' : 'スタッフ登録'}}</h2>
+			<span flex></span>
+			<md-button class="md-icon-button" ng-click="ctrl.cancel()">
+				<md-icon aria-label="Close dialog">clear</md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content class="md-padding">
+		<form name="staff-form">
+			<div layout layout-sm="column">
+				<md-input-container flex>
+					<label class="md-caption md-no-float">氏名（姓）</label>
+					<input ng-model="ctrl.staff.family_name">
+					<div ng-message ng-bind="ctrl.error.family_name"></div>
+				</md-input-container>
+				<md-input-container flex>
+					<label class="md-caption md-no-float">氏名（名）</label>
+					<input ng-model="ctrl.staff.given_name">
+					<div ng-message ng-bind="ctrl.error.given_name"></div>
+				</md-input-container>
+			</div>
+			<div layout layout-sm="column">
+				<md-input-container flex>
+					<label class="md-caption md-no-float">カナ（姓）</label>
+					<input ng-model="ctrl.staff.family_name_kana">
+					<div ng-message ng-bind="ctrl.error.family_name_kana"></div>
+				</md-input-container>
+				<md-input-container flex>
+					<label class="md-caption md-no-float">カナ（名）</label>
+					<input ng-model="ctrl.staff.given_name_kana">
+					<div ng-message ng-bind="ctrl.error.given_name_kana"></div>
+				</md-input-container>
+			</div>
+			<div layout layout-sm="column">
+				<md-input-container flex>
+					<label class="md-caption md-no-float">メールアドレス</label>
+					<input ng-model="ctrl.staff.email" type="email">
+					<div ng-message ng-bind="ctrl.error.email"></div>
+				</md-input-container>
+			</div>
+			<div layout layout-sm="column">
+				<md-input-container flex>
+					<label class="md-caption md-no-float">電話番号</label>
+					<input ng-model="ctrl.staff.phone_number">
+					<div ng-message ng-bind="ctrl.error.phone_number"></div>
+				</md-input-container>
+			</div>
+			<div layout layout-sm="column">
+				<md-input-container flex>
+					<label class="md-caption md-no-float">ログインID</label>
+					<input ng-model="ctrl.staff.login_id">
+					<div ng-message ng-bind="ctrl.error.login_id"></div>
+				</md-input-container>
+			</div>
+			<div layout layout-sm="column">
+				<md-input-container flex>
+					<label class="md-caption md-no-float">パスワード</label>
+					<input ng-model="ctrl.staff.password" type="password" placeholder="******">
+					<div ng-message ng-bind="ctrl.error.password"></div>
+				</md-input-container>
+			</div>
+		</form>
+	</md-dialog-content>
+	<md-dialog-actions layout="row">
+		<span flex></span>
+		<md-button class="md-raised" ng-click="ctrl.cancel()">キャンセル</md-button>
+		<md-button class="md-raised md-primary" ng-click="ctrl.save()">保存する</md-button>
+	</md-dialog-actions>
+</md-dialog>

@@ -1,0 +1,264 @@
+<div layout="row" layout-fill>
+	<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+		<manage-side-nav></manage-side-nav>
+	</md-sidenav>
+
+	<div flex layout="column" class="relative" role="main">
+		<manage-toolbar breadcrumbs="['利用者', '食事・活動・気分について']"></manage-toolbar>
+
+		<manage-twilio customer-id="{{ctrl.$stateParams.customerId}}" phones="ctrl.phones"></manage-twilio>
+
+		<md-button class="md-fab md-fab-bottom-right md-primary" aria-label="Save" ng-disabled="ctrl.manageServicesTwilio.inConnected === true && ctrl.manageServicesTwilio.inCalling === false" ng-click="ctrl.save($event)">
+			<md-icon md-font-icon="material-icons">save</md-icon>
+		</md-button>
+
+		<md-content class="md-default-theme md-padding">
+			<div flex layout="column">
+				<md-card>
+					<md-card-content class="card-list">
+						<md-list class="list-customer">
+							<md-list-item ng-click="ctrl.showInfo($event, ctrl.$stateParams.customerId)">
+								<div layout="row" layout-align="center center" style="width: 70px;">
+									<div class="md-avatar img-circle" ng-if="ctrl.customer.photo === null" style="height: 50px;width: 50px;background-color: #999999;"></div>
+									<img ng-if="ctrl.customer.photo !== null" ng-src="{{ctrl.constant.resourceBasePath}}customer/{{ctrl.customer.photo}}" class="md-avatar img-circle" style="height: 50px;width: 50px;">
+								</div>
+								<div flex="40" layout="column" class="area-name">
+									<span class="kana">{{ctrl.customer.family_name_kana}} {{ctrl.customer.given_name_kana}}</span>
+									<span class="name">{{ctrl.customer.family_name}} {{ctrl.customer.given_name}}<small class="age" ng-if="ctrl.customer.birthday">&nbsp;({{ctrl.customer.birthday | toAge}})</small></span>
+								</div>
+								<div flex="60" layout-align="start center">
+									<small>前回：{{ctrl.customer.latest_hearing_at ? (ctrl.customer.latest_hearing_at | toJpDate) : '聞き取り情報なし'}}</small>
+								</div>
+							</md-list-item>
+						</md-list>
+					</md-card-content>
+				</md-card>
+				<md-card class="card-hearing hearing">
+					<md-card-content>
+						<div layout="column">
+							<div layout="row">
+								<p>
+									<span style="font-size:20px;font-weight:bold;margin-top:5px;">{{ctrl.systemService.formatDate(ctrl.systemService.addDate(ctrl.$stateParams.hearingAt, 0), 'M月D日（ddd）')}}</span>
+									<md-datepicker ng-model="ctrl.search.hearingAt"></md-datepicker>
+								</p>
+							</div>
+							<div layout="row" layout-sm="column">
+								<md-content>
+									<h3 class="item-header"><md-icon md-font-icon="material-icons">favorite</md-icon>体調について</h3>
+									<div layout="row" layout-xs="column">
+										<div flex layout="column">
+											<h4 class="item-header">{{ctrl.const.questions['1'].question}}</h4>
+											<md-input-container flex layout="column" md-no-float>
+												<md-radio-group ng-model="ctrl.hearing.question_1" layout="column">
+													<md-radio-button ng-repeat="answer in ctrl.const.questions['1'].answers" value="{{answer.value}}">{{answer.label}}</md-radio-button>
+												</md-radio-group>
+												<div ng-message ng-bind="ctrl.error.question_1"></div>
+											</md-input-container>
+										</div>
+										<div flex layout="column">
+											<h4 class="item-header">備考</h4>
+											<md-input-container flex layout="column" md-no-float>
+												<textarea ng-model="ctrl.hearing.question_note_01" rows="3" aria-label="question_note_01" placeholder="特に無し" md-no-autogrow></textarea>
+												<div ng-message ng-bind="ctrl.error.question_note_01"></div>
+											</md-input-container>
+										</div>
+									</div>
+
+									<md-divider></md-divider>
+									<h3 class="item-header"><md-icon md-font-icon="material-icons">restaurant</md-icon>食欲・食事について</h3>
+									<div layout="row" layout-xs="column">
+										<div flex layout="column">
+											<div layout="column">
+												<h4 class="item-header">{{ctrl.const.questions['2'].question}}</h4>
+												<md-input-container flex layout="column" md-no-float>
+													<md-radio-group ng-model="ctrl.hearing.question_2" layout="column">
+														<md-radio-button ng-repeat="answer in ctrl.const.questions['2'].answers" value="{{answer.value}}">{{answer.label}}</md-radio-button>
+													</md-radio-group>
+													<div ng-message ng-bind="ctrl.error.question_2"></div>
+												</md-input-container>
+											</div>
+											<div layout="column">
+												<h4 class="item-header">{{ctrl.const.questions['3'].question}}</h4>
+												<md-input-container flex layout="column" md-no-float>
+													<md-checkbox ng-repeat="answer in ctrl.const.questions['3'].answers" ng-checked="ctrl.systemService.existsList(answer.value, ctrl.hearing.question_3)" ng-click="ctrl.systemService.toggleList(answer.value, ctrl.hearing.question_3)">{{answer.label}}</md-checkbox>
+													<div ng-message ng-bind="ctrl.error.question_3"></div>
+												</md-input-container>
+											</div>
+											<div layout="column">
+												<h4 class="item-header">{{ctrl.const.questions['4'].question}}</h4>
+												<md-input-container flex layout="column" md-no-float>
+													<md-radio-group ng-model="ctrl.hearing.question_4" layout="column">
+														<md-radio-button ng-repeat="answer in ctrl.const.questions['4'].answers" value="{{answer.value}}">{{answer.label}}</md-radio-button>
+													</md-radio-group>
+													<div ng-message ng-bind="ctrl.error.question_4"></div>
+												</md-input-container>
+											</div>
+										</div>
+										<div flex layout="column">
+											<h4 class="item-header">備考</h4>
+											<md-input-container flex layout="column" md-no-float>
+												<textarea ng-model="ctrl.hearing.question_note_02" rows="3" aria-label="question_note_02" placeholder="特に無し" md-no-autogrow></textarea>
+												<div ng-message ng-bind="ctrl.error.question_note_02"></div>
+											</md-input-container>
+										</div>
+									</div>
+
+									<md-divider></md-divider>
+									<h3 class="item-header"><md-icon md-font-icon="material-icons">directions_run</md-icon>活動・運動について</h3>
+									<div layout="row" layout-xs="column">
+										<div flex layout="column">
+											<div layout="column">
+												<h4 class="item-header">{{ctrl.const.questions['5'].question}}</h4>
+												<md-input-container flex layout="column" md-no-float>
+													<md-checkbox ng-repeat="answer in ctrl.const.questions['5'].answers" ng-checked="ctrl.systemService.existsList(answer.value, ctrl.hearing.question_5)" ng-click="ctrl.systemService.toggleList(answer.value, ctrl.hearing.question_5)">{{answer.label}}</md-checkbox>
+													<div ng-message ng-bind="ctrl.error.question_5"></div>
+												</md-input-container>
+											</div>
+											<div layout="column">
+												<h4 class="item-header">{{ctrl.const.questions['6'].question}}</h4>
+												<md-input-container flex layout="row" md-no-float>
+													<md-radio-group ng-model="ctrl.hearing.question_6" layout="column">
+														<md-radio-button ng-repeat="answer in ctrl.const.questions['6'].answers" value="{{answer.value}}">{{answer.label}}</md-radio-button>
+													</md-radio-group>
+													<div ng-message ng-bind="ctrl.error.question_6"></div>
+												</md-input-container>
+											</div>
+											<div layout="column">
+												<h4 class="item-header">{{ctrl.const.questions['7'].question}}</h4>
+												<md-input-container flex layout="column" md-no-float>
+													<md-radio-group ng-model="ctrl.hearing.question_7" layout="column">
+														<md-radio-button ng-repeat="answer in ctrl.const.questions['7'].answers" value="{{answer.value}}">{{answer.label}}</md-radio-button>
+													</md-radio-group>
+													<div ng-message ng-bind="ctrl.error.question_7"></div>
+												</md-input-container>
+											</div>
+										</div>
+										<div flex layout="column">
+											<h4 class="item-header">備考</h4>
+											<md-input-container flex layout="column" md-no-float>
+												<textarea ng-model="ctrl.hearing.question_note_03" rows="3" aria-label="question_note_03" placeholder="特に無し" md-no-autogrow></textarea>
+												<div ng-message ng-bind="ctrl.error.question_note_03"></div>
+											</md-input-container>
+										</div>
+									</div>
+
+									<md-divider></md-divider>
+									<h3 class="item-header"><md-icon md-font-icon="material-icons">textsms</md-icon>コミュニケーション・気持ちについて</h3>
+									<div layout="row" layout-xs="column">
+										<div flex layout="column">
+											<div layout="column">
+												<h4 class="item-header">{{ctrl.const.questions['8'].question}}</h4>
+												<md-input-container flex layout="column" md-no-float>
+													<md-radio-group ng-model="ctrl.hearing.question_8" layout="column">
+														<md-radio-button ng-repeat="answer in ctrl.const.questions['8'].answers" value="{{answer.value}}">{{answer.label}}</md-radio-button>
+													</md-radio-group>
+													<div ng-message ng-bind="ctrl.error.question_8"></div>
+												</md-input-container>
+											</div>
+											<div layout="column">
+												<h4 class="item-header">{{ctrl.const.questions['9'].question}}</h4>
+												<md-input-container flex layout="column" md-no-float>
+													<md-radio-group ng-model="ctrl.hearing.question_9" layout="column">
+														<md-radio-button ng-repeat="answer in ctrl.const.questions['9'].answers" value="{{answer.value}}">{{answer.label}}</md-radio-button>
+													</md-radio-group>
+													<div ng-message ng-bind="ctrl.error.question_9"></div>
+												</md-input-container>
+											</div>
+											<div layout="column">
+												<h4 class="item-header">{{ctrl.const.questions['10'].question}}</h4>
+												<md-input-container flex layout="column" md-no-float>
+													<md-checkbox ng-repeat="answer in ctrl.const.questions['10'].answers" ng-checked="ctrl.systemService.existsList(answer.value, ctrl.hearing.question_10)" ng-click="ctrl.systemService.toggleList(answer.value, ctrl.hearing.question_10)">{{answer.label}}</md-checkbox>
+													<div ng-message ng-bind="ctrl.error.question_10"></div>
+												</md-input-container>
+											</div>
+										</div>
+										<div flex layout="column">
+											<h4 class="item-header">備考</h4>
+											<md-input-container flex layout="column" md-no-float>
+												<textarea ng-model="ctrl.hearing.question_note_04" rows="3" aria-label="question_note_04" placeholder="特に無し" md-no-autogrow></textarea>
+												<div ng-message ng-bind="ctrl.error.question_note_04"></div>
+											</md-input-container>
+										</div>
+									</div>
+
+									<md-divider></md-divider>
+									<h3 class="item-header"><md-icon md-font-icon="material-icons">accessibility</md-icon>身体について</h3>
+									<div flex layout="row" layout-xs="column">
+										<div flex-gt-xs="30">
+											<md-input-container flex="60" md-no-float>
+												<label class="md-caption md-no-float">身長</label>
+												<input ng-model="ctrl.hearing.body.height" type="number" step="0.1">
+											</md-input-container>
+											<span flex>cm</span>
+										</div>
+										<span flex-gt-xs="5"></span>
+										<div flex-gt-xs="30">
+											<md-input-container flex="60" md-no-float>
+												<label class="md-caption md-no-float">体重</label>
+												<input ng-model="ctrl.hearing.body.weight" type="number" step="0.1">
+											</md-input-container>
+											<span flex>kg</span>
+										</div>
+										<span flex-gt-xs="5"></span>
+										<div flex-gt-xs="30">
+											<md-input-container flex="60" md-no-float>
+												<label class="md-caption md-no-float">体温</label>
+												<input ng-model="ctrl.hearing.body.temperature" type="number" step="0.1">
+											</md-input-container>
+											<span flex>度</span>
+										</div>
+									</div>
+									<div flex layout="row" layout-xs="column">
+										<div flex-gt-xs="30">
+											<md-input-container flex="60" md-no-float>
+												<label class="md-caption md-no-float">最高血圧</label>
+												<input ng-model="ctrl.hearing.body.blood.pressure.systolic" type="number" step="0.1">
+											</md-input-container>
+											<span flex>mmHg</span>
+										</div>
+										<span flex-gt-xs="5"></span>
+										<div flex-gt-xs="30">
+											<md-input-container flex="60" md-no-float>
+												<label class="md-caption md-no-float">最低血圧</label>
+												<input ng-model="ctrl.hearing.body.blood.pressure.diastolic" type="number" step="0.1">
+											</md-input-container>
+											<span flex>mmHg</span>
+										</div>
+									</div>
+									<div layout="column">
+										<h4 class="item-header">備考</h4>
+										<md-input-container flex layout="column" md-no-float>
+											<textarea ng-model="ctrl.hearing.question_note_05" rows="3" aria-label="question_note_05" placeholder="特に無し" md-no-autogrow></textarea>
+											<div ng-message ng-bind="ctrl.error.question_note_05"></div>
+										</md-input-container>
+									</div>
+
+									<md-divider></md-divider>
+									<h3 class="item-header"><md-icon md-font-icon="material-icons">hearing</md-icon>聞き取り時の印象&nbsp;<small style="color:rgb(221,44,0);">(聞き取りスタッフが受けた印象を入力してください)</small></h3>
+									<div layout="row" layout-xs="column">
+										<div flex layout="column">
+											<h4 class="item-header">{{ctrl.const.impressions['1'].question}}</h4>
+											<md-input-container flex layout="column" md-no-float>
+												<md-radio-group ng-model="ctrl.hearing.impression_1" layout="column">
+													<md-radio-button ng-repeat="answer in ctrl.const.impressions['1'].answers" value="{{answer.value}}">{{answer.label}}</md-radio-button>
+												</md-radio-group>
+												<div ng-message ng-bind="ctrl.error.impression_1"></div>
+											</md-input-container>
+										</div>
+										<div flex layout="column">
+											<h4 class="item-header">備考</h4>
+											<md-input-container flex layout="column" md-no-float>
+												<textarea ng-model="ctrl.hearing.impression_note_01" rows="3" aria-label="impression_note_01" placeholder="特に無し" md-no-autogrow></textarea>
+												<div ng-message ng-bind="ctrl.error.impression_note_01"></div>
+											</md-input-container>
+										</div>
+									</div>
+								</md-content>
+							</div>
+						</div>
+					</md-card-content>
+				</md-card>
+			</div>
+		</md-content>
+	</div>
+</div>

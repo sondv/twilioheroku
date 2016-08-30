@@ -1,0 +1,222 @@
+<div flex layout-fill layout="column" class="relative">
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<md-button class="md-icon-button" ng-href="#/customer/top/{{ctrl.$stateParams.hash}}">
+				<md-icon md-font-icon="material-icons">arrow_back</md-icon>
+			</md-button>
+			<h3>
+				<span>{{ctrl.$stateParams.date | toJpDate}}</span>
+			</h3>
+		</div>
+	</md-toolbar>
+	<md-progress-linear md-mode="indeterminate" ng-show="ctrl.hearing == null"></md-progress-linear>
+
+	<md-content flex class="md-default-theme md-padding hearing">
+		<div flex layout="column" ng-show="ctrl.hearing != null" class="fade" role="main">
+			<md-content flex layout-padding ng-show="ctrl.twilio_histories.length > 0">
+				<h3 class="item-header"><md-icon md-font-icon="material-icons">record_voice_over</md-icon>録音データ</h3>
+			</md-content>
+			<md-content ng-show="ctrl.twilio_histories.length > 0">
+				<md-list>
+					<md-list-item ng-repeat="history in ctrl.twilio_histories" ng-if="history.record_file_path != null && history.record_file_path != ''" class="md-3-line">
+						<md-icon md-font-icon="material-icons" class="md-avatar-icon" ng-click="ctrl.playRecordFile(history.record_file_path)">{{ctrl.playRecordFilePath !== history.record_file_path || ctrl.audio.paused ? 'play_arrow' : 'pause'}}</md-icon>
+						<div class="md-list-item-text">
+							<h3>{{history.start_time | toJpTime}} 〜</h3>
+							<p ng-show="ctrl.playRecordFilePath !== history.record_file_path">約{{history.duration}}秒</p>
+							<md-slider-container ng-show="ctrl.playRecordFilePath === history.record_file_path">
+								<span style="margin-right:12px;">{{ctrl.audio.currentTime | trackTime}}</span>
+								<md-slider flex min="0" max="1" step="0.01" ng-model="ctrl.audio.progress" aria-label="progress" style="min-width:100px;"></md-slider>
+								<span style="margin-left:12px;">{{ctrl.audio.currentTime + ctrl.audio.remaining | trackTime}}</span>
+							</md-slider-container>
+						</div>
+						<md-divider md-inset ng-if="!$last"></md-divider>
+					</md-list-item>
+				</md-list>
+			</md-content>
+			<md-content flex layout-padding>
+				<md-divider ng-show="ctrl.twilio_histories.length > 0"></md-divider>
+				<h3 class="item-header"><md-icon md-font-icon="material-icons">favorite</md-icon>体調について</h3>
+				<div layout="row" layout-xs="column" class="item-content">
+					<div flex layout="column">
+						<h4 class="item-header">{{ctrl.const.questions['1'].question}}</h4>
+						<md-input-container flex layout="column" md-no-float>
+							<md-radio-group ng-model="ctrl.hearing.question_1" layout="column">
+								<md-radio-button ng-repeat="answer in ctrl.const.questions['1'].answers" ng-disabled="answer.value != ctrl.hearing.question_1" value="{{answer.value}}">{{answer.label}}</md-radio-button>
+							</md-radio-group>
+						</md-input-container>
+					</div>
+					<div flex layout="column">
+						<h4 class="item-header">備考</h4>
+						<p class="note">{{ctrl.hearing.question_note_01}}</p>
+					</div>
+				</div>
+
+				<md-divider></md-divider>
+				<h3 class="item-header"><md-icon md-font-icon="material-icons">restaurant</md-icon>食欲・食事について</h3>
+				<div layout="row" layout-xs="column" class="item-content">
+					<div flex layout="column">
+						<div layout="column">
+							<h4 class="item-header">{{ctrl.const.questions['2'].question}}</h4>
+							<md-input-container flex layout="column" md-no-float>
+								<md-radio-group ng-model="ctrl.hearing.question_2" layout="column">
+									<md-radio-button ng-repeat="answer in ctrl.const.questions['2'].answers" ng-disabled="answer.value != ctrl.hearing.question_2" value="{{answer.value}}">{{answer.label}}</md-radio-button>
+								</md-radio-group>
+							</md-input-container>
+						</div>
+						<div layout="column">
+							<h4 class="item-header">{{ctrl.const.questions['3'].question}}</h4>
+							<md-input-container flex layout="column" md-no-float>
+								<md-checkbox ng-repeat="answer in ctrl.const.questions['3'].answers" ng-checked="ctrl.systemService.existsList(answer.value, ctrl.hearing.question_3)" ng-disabled="!ctrl.systemService.existsList(answer.value, ctrl.hearing.question_3)">{{answer.label}}</md-checkbox>
+							</md-input-container>
+						</div>
+						<div layout="column">
+							<h4 class="item-header">{{ctrl.const.questions['4'].question}}</h4>
+							<md-input-container flex layout="column" md-no-float>
+								<md-radio-group ng-model="ctrl.hearing.question_4" layout="column">
+									<md-radio-button ng-repeat="answer in ctrl.const.questions['4'].answers" ng-disabled="answer.value != ctrl.hearing.question_4" value="{{answer.value}}">{{answer.label}}</md-radio-button>
+								</md-radio-group>
+							</md-input-container>
+						</div>
+					</div>
+					<div flex layout="column">
+						<h4 class="item-header">備考</h4>
+						<p class="note">{{ctrl.hearing.question_note_02}}</p>
+					</div>
+				</div>
+
+				<md-divider></md-divider>
+				<h3 class="item-header"><md-icon md-font-icon="material-icons">directions_run</md-icon>活動・運動について</h3>
+				<div layout="row" layout-xs="column" class="item-content">
+					<div flex layout="column">
+						<div layout="column">
+							<h4 class="item-header">{{ctrl.const.questions['5'].question}}</h4>
+							<md-input-container flex layout="column" md-no-float>
+								<md-checkbox ng-repeat="answer in ctrl.const.questions['5'].answers" ng-checked="ctrl.systemService.existsList(answer.value, ctrl.hearing.question_5)" ng-disabled="!ctrl.systemService.existsList(answer.value, ctrl.hearing.question_5)">{{answer.label}}</md-checkbox>
+							</md-input-container>
+						</div>
+						<div layout="column">
+							<h4 class="item-header">{{ctrl.const.questions['6'].question}}</h4>
+							<md-input-container flex layout="row" md-no-float>
+								<md-radio-group ng-model="ctrl.hearing.question_6" layout="column">
+									<md-radio-button ng-repeat="answer in ctrl.const.questions['6'].answers" ng-disabled="answer.value != ctrl.hearing.question_6" value="{{answer.value}}">{{answer.label}}</md-radio-button>
+								</md-radio-group>
+							</md-input-container>
+						</div>
+						<div layout="column">
+							<h4 class="item-header">{{ctrl.const.questions['7'].question}}</h4>
+							<md-input-container flex layout="column" md-no-float>
+								<md-radio-group ng-model="ctrl.hearing.question_7" layout="column">
+									<md-radio-button ng-repeat="answer in ctrl.const.questions['7'].answers" ng-disabled="answer.value != ctrl.hearing.question_7" value="{{answer.value}}">{{answer.label}}</md-radio-button>
+								</md-radio-group>
+							</md-input-container>
+						</div>
+					</div>
+					<div flex layout="column">
+						<h4 class="item-header">備考</h4>
+						<p class="note">{{ctrl.hearing.question_note_03}}</p>
+					</div>
+				</div>
+
+				<md-divider></md-divider>
+				<h3 class="item-header"><md-icon md-font-icon="material-icons">textsms</md-icon>コミュニケーション・気持ちについて</h3>
+				<div layout="row" layout-xs="column" class="item-content">
+					<div flex layout="column">
+						<div layout="column">
+							<h4 class="item-header">{{ctrl.const.questions['8'].question}}</h4>
+							<md-input-container flex layout="column" md-no-float>
+								<md-radio-group ng-model="ctrl.hearing.question_8" layout="column">
+									<md-radio-button ng-repeat="answer in ctrl.const.questions['8'].answers" ng-disabled="answer.value != ctrl.hearing.question_8" value="{{answer.value}}">{{answer.label}}</md-radio-button>
+								</md-radio-group>
+							</md-input-container>
+						</div>
+						<div layout="column">
+							<h4 class="item-header">{{ctrl.const.questions['9'].question}}</h4>
+							<md-input-container flex layout="column" md-no-float>
+								<md-radio-group ng-model="ctrl.hearing.question_9" layout="column">
+									<md-radio-button ng-repeat="answer in ctrl.const.questions['9'].answers" ng-disabled="answer.value != ctrl.hearing.question_9" value="{{answer.value}}">{{answer.label}}</md-radio-button>
+								</md-radio-group>
+							</md-input-container>
+						</div>
+						<div layout="column">
+							<h4 class="item-header">{{ctrl.const.questions['10'].question}}</h4>
+							<md-input-container flex layout="column" md-no-float>
+								<md-checkbox ng-repeat="answer in ctrl.const.questions['10'].answers" ng-checked="ctrl.systemService.existsList(answer.value, ctrl.hearing.question_10)" ng-disabled="!ctrl.systemService.existsList(answer.value, ctrl.hearing.question_10)">{{answer.label}}</md-checkbox>
+							</md-input-container>
+						</div>
+					</div>
+					<div flex layout="column">
+						<h4 class="item-header">備考</h4>
+						<p class="note">{{ctrl.hearing.question_note_04}}</p>
+					</div>
+				</div>
+
+				<md-divider></md-divider>
+				<h3 class="item-header"><md-icon md-font-icon="material-icons">accessibility</md-icon>身体について</h3>
+				<div layout="row" layout-xs="column" class="item-content">
+					<div flex-gt-xs="30">
+						<md-input-container flex="60" md-no-float>
+							<label class="md-caption md-no-float">身長</label>
+							<input ng-model="ctrl.hearing.body.height" type="number" step="0.1" readonly>
+						</md-input-container>
+						<span flex>cm</span>
+					</div>
+					<span flex-gt-xs="5"></span>
+					<div flex-gt-xs="30">
+						<md-input-container flex="60" md-no-float>
+							<label class="md-caption md-no-float">体重</label>
+							<input ng-model="ctrl.hearing.body.weight" type="number" step="0.1" readonly>
+						</md-input-container>
+						<span flex>kg</span>
+					</div>
+					<span flex-gt-xs="5"></span>
+					<div flex-gt-xs="30">
+						<md-input-container flex="60" md-no-float>
+							<label class="md-caption md-no-float">体温</label>
+							<input ng-model="ctrl.hearing.body.temperature" type="number" step="0.1" readonly>
+						</md-input-container>
+						<span flex>度</span>
+					</div>
+				</div>
+				<div layout="row" layout-xs="column" class="item-content">
+					<div flex-gt-xs="30">
+						<md-input-container flex="60" md-no-float>
+							<label class="md-caption md-no-float">最高血圧</label>
+							<input ng-model="ctrl.hearing.body.blood.pressure.systolic" type="number" step="0.1" readonly>
+						</md-input-container>
+						<span flex>mmHg</span>
+					</div>
+					<span flex-gt-xs="5"></span>
+					<div flex-gt-xs="30">
+						<md-input-container flex="60" md-no-float>
+							<label class="md-caption md-no-float">最低血圧</label>
+							<input ng-model="ctrl.hearing.body.blood.pressure.diastolic" type="number" step="0.1" readonly>
+						</md-input-container>
+						<span flex>mmHg</span>
+					</div>
+				</div>
+				<div layout="column" class="item-content">
+					<h4 class="item-header">備考</h4>
+					<p class="note">{{ctrl.hearing.question_note_05}}</p>
+				</div>
+
+				<md-divider></md-divider>
+				<h3 class="item-header"><md-icon md-font-icon="material-icons">hearing</md-icon>聞き取り時の印象</h3>
+				<div layout="row" layout-xs="column" class="item-content">
+					<div flex layout="column">
+						<h4 class="item-header">{{ctrl.const.impressions['1'].question}}</h4>
+						<md-input-container flex layout="column" md-no-float>
+							<md-radio-group ng-model="ctrl.hearing.impression_1" layout="column">
+								<md-radio-button ng-repeat="answer in ctrl.const.impressions['1'].answers" ng-disabled="answer.value != ctrl.hearing.impression_1" value="{{answer.value}}">{{answer.label}}</md-radio-button>
+							</md-radio-group>
+							<div ng-message ng-bind="ctrl.error.impression_1"></div>
+						</md-input-container>
+					</div>
+					<div flex layout="column">
+						<h4 class="item-header">備考</h4>
+						<p class="note">{{ctrl.hearing.impression_note_01}}</p>
+					</div>
+				</div>
+			</md-content>
+		</div>
+	</md-content>
+</div>

@@ -1,0 +1,27 @@
+<md-menu md-position-mode="target-right target" style="padding: 0;">
+	<md-button class="md-fab md-fab-top-right" id="twilio-enable" aria-label="Call" ng-show="ctrl.phones.length > 0 && ctrl.manageServicesTwilio.inConnected === false && ctrl.manageServicesTwilio.inCalling === false" ng-click="$mdOpenMenu($event)">
+		<md-icon md-font-icon="material-icons">call</md-icon>
+	</md-button>
+	<md-menu-content width="4">
+		<md-menu-item ng-repeat="phone in ctrl.phones">
+			<md-button ng-click="ctrl.manageServicesTwilio.call($event, ctrl.customerId, [phone.number], phone.type === 'Twilio')" ng-class="{'md-warn': phone.type.indexOf('緊急') > -1}">
+				<div layout="row" flex>
+					<div flex="35">
+						<small>{{phone.type}}</small>
+					</div>
+					<div flex="65">
+						<span style="font-size:18px;font-weight:bold;">{{phone.number | formatPhone}}</span>
+					</div>
+				</div>
+			</md-button>
+		</md-menu-item>
+	</md-menu-content>
+</md-menu>
+
+<md-button class="md-fab md-fab-top-right" id="twilio-calling" aria-label="Call Setting" ng-show="ctrl.phones.length > 0 && ctrl.manageServicesTwilio.inConnected === false && ctrl.manageServicesTwilio.inCalling === true" ng-click="ctrl.manageServicesTwilio.connectCancel($event)">
+	<md-icon md-font-icon="material-icons">settings_phone</md-icon>
+</md-button>
+
+<md-button class="md-fab md-fab-top-left" id="twilio-talking" aria-label="Call end" ng-show="ctrl.manageServicesTwilio.inConnected === true && ctrl.manageServicesTwilio.inCalling === false" ng-click="ctrl.manageServicesTwilio.disconnectAll($event)">
+	<md-icon md-font-icon="material-icons">call_end</md-icon>
+</md-button>

@@ -1,0 +1,19 @@
+<md-dialog aria-label="着信" ng-cloak>
+	<md-dialog-content>
+		<div class="md-dialog-content">
+			<h2 ng-show="!ctrl.customer">{{ctrl.incomingPhoneNumber | formatPhone}}</h2>
+			<h2 ng-show="!ctrl.customer && ctrl.is_registered === false">未登録の番号から着信です</h2>
+			<h2 ng-show="ctrl.customer.family_name">{{ctrl.customer.family_name + ' ' + ctrl.customer.given_name + ' さんからの着信です'}}</h2>
+			<p ng-show="ctrl.customer.family_name_kana && ctrl.customer.given_name_kana">{{ctrl.customer.family_name_kana}} {{ctrl.customer.given_name_kana}}</p>
+			<p ng-show="ctrl.customer.post_code && ctrl.customer.address">{{ctrl.customer.post_code}} {{ctrl.customer.address}}</p>
+			<div class="md-media-sm card-media img-circle" ng-if="ctrl.customer.photo === null" style="background-color: #999999;"></div>
+			<div class="md-media-sm card-media" ng-if="ctrl.customer.photo !== null">
+				<img class="img-circle" ng-src="{{ctrl.constant.resourceBasePath}}customer/{{ctrl.customer.photo}}" style="height: 80px;width: 80px;">
+			</div>
+		</div>
+	</md-dialog-content>
+	<md-dialog-actions layout="row">
+		<md-button ng-click="ctrl.cancel()">拒否する</md-button>
+		<md-button ng-click="ctrl.acceptIncoming()">電話にでる</md-button>
+	</md-dialog-actions>
+</md-dialog>

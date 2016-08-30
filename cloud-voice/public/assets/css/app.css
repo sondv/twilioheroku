@@ -1,0 +1,513 @@
+/**
+ * 共通部品
+ */
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../icon/font/MaterialIcons-Regular.eot); /* For IE6-8 */
+    src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url(../icon/font/MaterialIcons-Regular.woff2) format('woff2'),
+    url(../icon/font/MaterialIcons-Regular.woff) format('woff'),
+    url(../icon/font/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px; /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+}
+
+/* Rules for sizing the icon. */
+.material-icons.md-18 {
+    font-size: 18px;
+}
+
+.material-icons.md-24 {
+    font-size: 24px;
+}
+
+.material-icons.md-36 {
+    font-size: 36px;
+}
+
+.material-icons.md-48 {
+    font-size: 48px;
+}
+
+/* Rules for using icons as black on a light background. */
+.material-icons.md-dark {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.material-icons.md-dark.md-inactive {
+    color: rgba(0, 0, 0, 0.26);
+}
+
+/* Rules for using icons as white on a dark background. */
+.material-icons.md-light {
+    color: rgba(255, 255, 255, 1);
+}
+
+.material-icons.md-light.md-inactive {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+md-content .no-avatar {
+    padding-left: 56px;
+}
+
+md-content.md-default-theme {
+    padding: 0;
+}
+
+md-toolbar {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
+}
+
+md-toolbar .md-button.md-icon-button {
+    padding-right: 50px;
+}
+
+.md-datepicker-input-container {
+    height: 24px;
+}
+
+md-card md-card-title md-card-title-media .md-media-sm {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+md-card md-content {
+    background-color: #fff;
+    width: 100%;
+}
+
+md-card-content.card-list {
+    padding: 0;
+}
+
+md-card-content.card-list md-list {
+    padding: 0;
+}
+
+md-card-content.card-list md-list-item {
+    border-bottom: 1px solid #ececec
+}
+
+md-input-container .img-circle {
+    text-align: center;
+}
+
+.md-button.md-small {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    min-height: 20px;
+    vertical-align: top;
+    font-size: 10px;
+    padding: 0 0;
+    margin: 0;
+}
+
+.md-button.md-large {
+    height: 55px;
+    width: 100px;
+    line-height: 40px;
+    min-height: 55px;
+    min-width: 100px;
+    vertical-align: top;
+    font-size: 22px;
+    padding: 0 0;
+    margin: 0;
+}
+
+.md-subheader .md-subheader-inner {
+    padding: 20px 16px 2px 16px;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+
+#chart-1, #chart-2 {
+    margin-bottom: 100px;
+}
+
+.section {
+    margin: 3em 0 0;
+}
+
+.widget {
+    border: 1px solid #abd9ea;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.card-header {
+    margin: 0 0 10px;
+}
+
+.page-header,
+.card-header,
+.content-header,
+.item-header {
+    font-weight: bold;
+    color: #666;
+}
+
+.wrapper-login {
+    margin: 0px auto;
+    padding-top: 5%;
+    max-width: 400px;
+}
+
+.hint {
+    position: absolute;
+    left: 2px;
+    right: auto;
+    bottom: 7px;
+    font-size: 12px;
+    line-height: 14px;
+    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+    color: grey;
+}
+
+.main {
+    min-height: calc(100vh - 100px);
+}
+
+
+/* アニメーション */
+.fade {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.0s;
+  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.0s;
+  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.0s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.0s;
+  opacity: 1;
+}
+
+.fade.ng-hide-remove {
+  opacity: 0;
+  display: block !important;
+}
+
+.fade.ng-hide-remove.ng-hide-remove-active {
+  opacity: 1;
+}
+
+
+
+
+/*ツールバー*/
+
+/*サイドナビ*/
+md-sidenav {
+    width: 272px;
+    min-width: 272px;
+}
+
+md-sidenav .nav-header {
+    height: 64px;
+}
+
+md-sidenav .nav-header img {
+    width: 256px;
+    min-width: 256px;
+}
+
+/*フッター*/
+footer {
+    height: 64px;
+}
+
+footer p {
+    margin: 8px;
+    font-size: 12px;
+    color: #666;
+}
+
+
+/**
+ * 利用者一覧
+ */
+.list-customer md-list-item {
+    height: 70px;
+}
+
+.list-customer .area-name .kana {
+    line-height: 25px;
+    font-size: 13px;
+}
+
+.list-customer .area-name .name {
+    line-height: 25px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.list-customer .area-name .age {
+    font-weight: normal;
+    font-size: 13px;
+}
+
+.list-customer .area-condition .heading {
+    line-height: 25px;
+    font-weight: bold;
+    color: #666;
+}
+
+
+/**
+ * 利用者詳細
+ */
+.dialog-customer {
+    width: 100%;
+}
+
+.profile h4 {
+    margin: 0;
+}
+
+.profile .note {
+    white-space: pre-wrap;
+}
+
+.customer-table .main {
+    position: relative;
+}
+
+.customer-table .list-header {
+    color: #55595c;
+    background-color: #eceeef;
+    width: 100%;
+    border-top: 1px solid #eceeef;
+}
+
+.customer-table .list-header > p {
+    padding: 0 15px 0;
+    font-weight: bold;
+}
+
+.customer-table .list-item {
+    width: 100%;
+    border-top: 1px solid #eceeef;
+}
+
+.customer-table .list-item > p {
+    padding: 0 15px 0;
+}
+
+.customer-table .blindfold {
+    background-color: rgba(256, 256, 256, 1.0);
+}
+
+.customer-table .loading {
+    position: absolute;
+    width: 100px;
+    top: 50%;
+    left: 50%;
+    margin-top: -48px;
+    margin-left: -48px;
+}
+
+
+/**
+ * 聞き取り
+ */
+.card-hearing {
+    font-size: 14px;
+}
+
+.card-hearing h4 {
+    margin-bottom: 0;
+}
+
+.card-hearing .note {
+    white-space: pre-wrap;
+}
+
+
+/**
+ * スタッフ一覧
+ */
+.list-staff md-list-item {
+    height: 70px;
+}
+
+.list-staff .area-name .kana {
+    line-height: 25px;
+    font-size: 14px;
+}
+
+.list-staff .area-name .name {
+    line-height: 25px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.list-staff .phone {
+    line-height: 25px;
+}
+
+.list-staff .email {
+    line-height: 25px;
+}
+
+
+/**
+ * スタッフ詳細
+ */
+.info-sub .label {
+    color: #444;
+    font-size: 12px;
+}
+
+.info-sub .value {
+    margin-left: 15px;
+}
+
+
+/**
+ * 利用者トップ
+ */
+.share-top .profile .photo {
+    margin: 30px 0 10px;
+    height: 200px;
+    width: 200px;
+    background-color: #999999;
+}
+.share-top .profile .name {
+    margin-bottom: 40px;
+}
+
+
+/**
+ * 聞き取り
+ */
+.hearing h3 {
+    margin-bottom: 0px;
+}
+.hearing h4 {
+    margin-top: 0.8rem;
+    margin-bottom: 0px;
+}
+.hearing h3 md-icon {
+    padding-right: 32px;
+}
+.hearing .item-content {
+    /*padding-left: 66px;*/
+}
+.hearing md-divider {
+    margin-top: 20px;
+}
+
+
+/**
+ * パーツ
+ */
+.card-profile .avatar {
+    margin: 10px 60px 10px 0;
+    height: 120px;
+    width: 120px;
+    background-color: #999;
+}
+
+.card-profile .name {
+    margin: 10px 0 10px;
+    color: #666;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.card-profile .name .kana {
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.card-profile .name .age {
+    font-size: 15px;
+}
+
+/* 検索コンテナ */
+md-input-container.search-container {
+    margin: 0;
+}
+md-input-container.search-container .md-errors-spacer {
+    min-height: 0px;
+    min-width: 0px;
+    max-height: 0px;
+    max-width: 0px;
+}
+
+/* データテーブル */
+.data-table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+}
+.data-table table {
+    width: 100%;
+    border-spacing: 0;
+    overflow: hidden;
+}
+.data-table table thead>tr,
+.data-table table tbody>tr {
+    height: 56px;
+}
+.data-table table td,
+.data-table table th {
+    color: rgba(0,0,0,.87);
+    font-size: 13px;
+    border-top: 1px rgba(0,0,0,.12) solid;
+}
+.data-table table th {
+    color: rgba(0,0,0,.54);
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+.data-table table td,
+.data-table table th {
+  vertical-align: middle;
+    text-align: left;
+}
+.data-table table td:first-child,
+.data-table table th:first-child {
+  padding: 0 0 0 24px;
+}
+.data-table table td.avater:first-child,
+.data-table table th.avater:first-child {
+  width: 40px;
+}
+.data-table table td:nth-child(2),
+.data-table table th:nth-child(2) {
+  padding: 0 24px;
+}
+.data-table table td:nth-child(n+3):nth-last-child(n+2),
+.data-table table th:nth-child(n+3):nth-last-child(n+2) {
+  padding: 0 56px 0 0;
+}
